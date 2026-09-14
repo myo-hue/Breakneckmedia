@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Break Neck Media — Photography, Videography &amp; Drone</title>
+<meta name="description" content="Break Neck Media — photography, videography and drone flying by Myo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07040E;
+    --bg-alt:#0F0821;
+    --panel:#170E2C;
+    --panel-2:#1D1236;
+    --line:#2E2049;
+    --fg:#F4F1FB;
+    --fg-muted:#AB9FC9;
+    --purple-deep:#3B0764;
+    --purple:#6D28D9;
+    --purple-bright:#9D5CFF;
+    --purple-glow:#C9A6FF;
+    --headline:'Space Grotesk', 'Inter', sans-serif;
+    --body:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(157,92,255,0.20), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 15%, rgba(109,40,217,0.18), transparent 55%),
+      var(--bg);
+    color:var(--fg);
+    font-family:var(--body);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    position:relative;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; }
+  ::selection{ background:var(--purple-bright); color:#0A0414; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--purple-glow); outline-offset:3px; border-radius:4px; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 28px; }
+
+  /* ---------- background camera watermarks (illustrated, not photos) ---------- */
+  .bg-camera{
+    position:absolute;
+    width:340px; height:340px;
+    opacity:0.06;
+    z-index:0;
+    pointer-events:none;
+  }
+  #about .bg-camera{ right:-60px; top:20%; transform:rotate(-8deg); }
+  #services .bg-camera{ left:-90px; bottom:0; transform:rotate(10deg); width:420px; height:420px; }
+  footer .bg-camera{ right:0; top:0; transform:rotate(-14deg); }
+
+  /* ---------- Nav ---------- */
+  header.site{
+    position:fixed; top:0; left:0; right:0; z-index:60;
+    background:linear-gradient(to bottom, rgba(7,4,14,0.92), rgba(7,4,14,0));
+    padding:18px 0 40px;
+    backdrop-filter:blur(2px);
+  }
+  .navrow{ display:flex; align-items:center; justify-content:space-between; }
+  .brandmark{
+    font-family:var(--headline); font-weight:700; font-size:20px;
+    letter-spacing:0.3px; text-decoration:none; display:flex; align-items:center; gap:10px;
+  }
+  .brandmark .dot{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--purple-bright);
+    box-shadow:0 0 0 4px rgba(157,92,255,0.20), 0 0 14px rgba(157,92,255,0.7);
+  }
+  nav.links{ display:flex; gap:30px; }
+  nav.links a{
+    font-size:14px; font-weight:600; text-decoration:none;
+    color:var(--fg-muted); padding:6px 0; border-bottom:1px solid transparent;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  nav.links a:hover{ color:var(--fg); border-color:var(--purple-bright); }
+
+  /* ---------- Flying drone (scroll-linked) ---------- */
+  #flying-drone{
+    position:fixed;
+    left:88%;
+    top:88%;
+    width:96px;
+    z-index:45;
+    pointer-events:none;
+    transition:top .05s linear, transform .35s ease-out;
+    filter:drop-shadow(0 8px 22px rgba(157,92,255,0.55));
+    animation:drone-bob 3.4s ease-in-out infinite;
+  }
+  @keyframes drone-bob{
+    0%,100%{ margin-top:0px; }
+    50%{ margin-top:-10px; }
+  }
+  .rotor{
+    transform-origin:center;
+    animation:rotor-spin 0.35s linear infinite;
+  }
+  @keyframes rotor-spin{ to{ transform:rotate(360deg); } }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex; align-items:flex-end;
+    padding-top:120px;
+    overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(7,4,14,0.25) 0%, rgba(7,4,14,0.6) 55%, var(--bg) 100%),
+      radial-gradient(ellipse 1000px 600px at 70% 20%, rgba(109,40,217,0.35), transparent 60%),
+      url('images/hero.jpeg') center 65%/cover no-repeat;
+  }
+  .hero-inner{ position:relative; width:100%; padding-bottom:86px; z-index:2; }
+  .eyebrow-line{ display:flex; align-items:center; gap:12px; color:var(--purple-glow); font-size:13px; font-weight:600; margin-bottom:18px; }
+  .eyebrow-line .rule{ width:36px; height:2px; background:var(--purple-glow); }
+  h1.hero-title{
+    font-family:var(--headline); font-weight:700;
+    font-size:clamp(46px, 9vw, 108px);
+    line-height:0.98; letter-spacing:-1px;
+    margin:0 0 22px; max-width:15ch;
+    will-change:transform;
+  }
+  .hero-title .line2{
+    background:linear-gradient(100deg, var(--purple-bright), var(--purple-glow));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{ max-width:46ch; color:#D9CFEF; font-size:clamp(16px, 2vw, 19px); margin:0 0 34px; }
+  .hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--body); font-weight:700; font-size:15px;
+    padding:14px 26px; border-radius:12px; text-decoration:none;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .btn-primary{
+    background:linear-gradient(100deg, var(--purple), var(--purple-bright));
+    color:#0A0414; border:1px solid transparent;
+    box-shadow:0 6px 24px rgba(109,40,217,0.45);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 30px rgba(157,92,255,0.55); }
+  .btn-ghost{ background:transparent; color:var(--fg); border:1px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--purple-bright); color:var(--purple-glow); transform:translateY(-2px); }
+
+  /* ---------- Section scaffolding ---------- */
+  section{ padding:110px 0; position:relative; }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:64px; flex-wrap:wrap; }
+  .section-head h2{ font-family:var(--headline); font-weight:700; font-size:clamp(32px, 4.5vw, 52px); margin:0; letter-spacing:-0.5px; }
+  .section-head p{ color:var(--fg-muted); max-width:34ch; margin:0; font-size:15px; }
+  .kicker{ color:var(--purple-glow); font-weight:600; font-size:13px; display:block; margin-bottom:10px; }
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.3,1); }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+  .reveal-delay-1.in-view{ transition-delay:.08s; }
+  .reveal-delay-2.in-view{ transition-delay:.16s; }
+
+  /* ---------- Services ---------- */
+  .service{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:60px; align-items:center;
+    padding:56px 0; border-top:1px solid var(--line);
+  }
+  .service:last-child{ border-bottom:1px solid var(--line); }
+  .service.reverse{ grid-template-columns:0.9fr 1.1fr; }
+  .service.reverse .service-media{ order:2; }
+  .service.reverse .service-copy{ order:1; }
+  .service-media{ aspect-ratio:4/5; overflow:hidden; border-radius:16px; position:relative; border:1px solid var(--line); }
+  .service-media img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease; }
+  .service:hover .service-media img{ transform:scale(1.045); }
+  .service-num{ font-family:var(--headline); font-size:14px; color:var(--purple-glow); letter-spacing:1px; font-weight:700; }
+  .service-copy h3{ font-family:var(--headline); font-weight:700; font-size:clamp(28px,4vw,40px); margin:14px 0 16px; }
+  .service-copy p{ color:var(--fg-muted); max-width:42ch; font-size:16px; margin:0 0 20px; }
+  .service-copy a.textlink{ color:var(--purple-glow); font-weight:700; font-size:14px; text-decoration:none; border-bottom:1px solid rgba(157,92,255,0.35); }
+  .service-copy a.textlink:hover{ border-color:var(--purple-glow); }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid{ display:grid; grid-template-columns:repeat(6, 1fr); grid-auto-rows:130px; gap:12px; }
+  .gallery-grid a{ grid-column:span 3; grid-row:span 2; overflow:hidden; position:relative; border-radius:14px; border:1px solid var(--line); }
+  .gallery-grid a:nth-child(1){ grid-column:span 4; grid-row:span 3; }
+  .gallery-grid a:nth-child(2){ grid-column:span 2; grid-row:span 2; }
+  .gallery-grid a:nth-child(3){ grid-column:span 2; grid-row:span 2; }
+  .gallery-grid a:nth-child(4){ grid-column:span 2; grid-row:span 3; }
+  .gallery-grid a:nth-child(5){ grid-column:span 3; grid-row:span 2; }
+  .gallery-grid a:nth-child(6){ grid-column:span 3; grid-row:span 2; }
+  .gallery-grid img{ width:100%; height:100%; object-fit:cover; transition:transform .6s ease, filter .6s ease; filter:grayscale(0.1) brightness(0.92); }
+  .gallery-grid a:hover img{ transform:scale(1.06); filter:grayscale(0) brightness(1); }
+  .gallery-more{ margin-top:34px; text-align:center; }
+
+  /* ---------- About ---------- */
+  .about{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:70px; align-items:center; }
+  .about-media{ position:relative; aspect-ratio:3/4; border-radius:16px; overflow:hidden; border:1px solid var(--line); }
+  .about-media img{ width:100%; height:100%; object-fit:cover; }
+  .about-copy p{ font-size:17px; color:#D9CFEF; max-width:52ch; }
+  .about-copy p + p{ margin-top:18px; }
+  .founder{ margin-top:30px; display:flex; align-items:center; gap:14px; }
+  .founder .line{ width:40px; height:2px; background:var(--purple-bright); }
+  .founder span{ font-family:var(--headline); font-size:18px; letter-spacing:0.2px; font-weight:700; }
+
+  /* ---------- CTA band ---------- */
+  .cta-band{ background:var(--panel); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .cta-inner{ display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; padding:70px 0; }
+  .cta-inner h2{ font-family:var(--headline); font-weight:700; font-size:clamp(28px,4.5vw,46px); margin:0; max-width:13ch; }
+  .cta-inner p{ color:var(--fg-muted); margin:10px 0 0; max-width:40ch; }
+
+  /* ---------- Footer ---------- */
+  footer{ padding:80px 0 46px; }
+  .contact-row{ display:grid; grid-template-columns:1.2fr 0.8fr; gap:50px; border-top:1px solid var(--line); padding-top:56px; }
+  .contact-row h2{ font-family:var(--headline); font-weight:700; font-size:clamp(30px,5vw,48px); margin:0 0 20px; }
+  .contact-links{ display:flex; flex-direction:row; gap:18px; margin-top:6px; }
+  .icon-btn{
+    width:58px; height:58px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, var(--panel-2), var(--panel));
+    border:1px solid var(--line);
+    text-decoration:none;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .icon-btn svg{ width:24px; height:24px; }
+  .icon-btn:hover{
+    border-color:var(--purple-bright);
+    box-shadow:0 8px 24px rgba(157,92,255,0.4);
+    transform:translateY(-3px);
+  }
+  .meta-col{ color:var(--fg-muted); font-size:14px; }
+  .meta-col .label{ color:var(--fg); font-weight:600; display:block; margin-bottom:6px; }
+  .meta-col div + div{ margin-top:22px; }
+  .foot-bottom{ margin-top:70px; padding-top:24px; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:var(--fg-muted); font-size:13px; }
+
+  @media (max-width:860px){
+    .service, .service.reverse{ grid-template-columns:1fr; gap:26px; }
+    .service.reverse .service-media, .service.reverse .service-copy{ order:0; }
+    .about{ grid-template-columns:1fr; }
+    .contact-row{ grid-template-columns:1fr; }
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }
+    .gallery-grid a, .gallery-grid a:nth-child(n){ grid-column:span 1 !important; grid-row:span 2 !important; }
+    nav.links{ display:none; }
+    .cta-inner{ flex-direction:column; align-items:flex-start; }
+    #flying-drone{ width:64px; left:80%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; scroll-behavior:auto !important; animation:none !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- illustrated camera glyph, used only as a faint decorative watermark -->
+    <g id="camera-glyph">
+      <rect x="20" y="60" width="200" height="130" rx="18" fill="none" stroke="#C9A6FF" stroke-width="4"/>
+      <rect x="80" y="34" width="60" height="30" rx="8" fill="none" stroke="#C9A6FF" stroke-width="4"/>
+      <circle cx="120" cy="128" r="46" fill="none" stroke="#C9A6FF" stroke-width="4"/>
+      <circle cx="120" cy="128" r="26" fill="none" stroke="#C9A6FF" stroke-width="4"/>
+      <circle cx="188" cy="82" r="8" fill="#C9A6FF"/>
+    </g>
+  </defs>
+</svg>
+
+<header class="site">
+  <div class="wrap navrow">
+    <a class="brandmark" href="#top"><img src="images/logo.jpeg" alt="Break Neck Media logo" style="height:34px;width:auto;border-radius:6px;">BREAK NECK MEDIA</a>
+    <nav class="links">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Flying drone, position driven by scroll progress in the script below -->
+<div id="flying-drone" aria-hidden="true">
+  <svg viewBox="0 0 220 180" xmlns="http://www.w3.org/2000/svg">
+    <!-- arms -->
+    <line x1="110" y1="88" x2="38" y2="32" stroke="#9D5CFF" stroke-width="6" stroke-linecap="round"/>
+    <line x1="110" y1="88" x2="182" y2="32" stroke="#9D5CFF" stroke-width="6" stroke-linecap="round"/>
+    <line x1="110" y1="88" x2="38" y2="148" stroke="#9D5CFF" stroke-width="6" stroke-linecap="round"/>
+    <line x1="110" y1="88" x2="182" y2="148" stroke="#9D5CFF" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- motor pods, blur discs, and spinning propeller blades -->
+    <circle cx="38" cy="32" r="24" fill="#C9A6FF" opacity="0.10"/>
+    <g class="rotor" style="transform-origin:38px 32px">
+      <rect x="14" y="30" width="48" height="4" rx="2" fill="#C9A6FF" opacity="0.9"/>
+      <rect x="36" y="8" width="4" height="48" rx="2" fill="#C9A6FF" opacity="0.9"/>
+    </g>
+    <circle cx="38" cy="32" r="7" fill="#3B0764"/>
+
+    <circle cx="182" cy="32" r="24" fill="#C9A6FF" opacity="0.10"/>
+    <g class="rotor" style="transform-origin:182px 32px">
+      <rect x="158" y="30" width="48" height="4" rx="2" fill="#C9A6FF" opacity="0.9"/>
+      <rect x="180" y="8" width="4" height="48" rx="2" fill="#C9A6FF" opacity="0.9"/>
+    </g>
+    <circle cx="182" cy="32" r="7" fill="#3B0764"/>
+
+    <circle cx="38" cy="148" r="24" fill="#C9A6FF" opacity="0.10"/>
+    <g class="rotor" style="transform-origin:38px 148px">
+      <rect x="14" y="146" width="48" height="4" rx="2" fill="#C9A6FF" opacity="0.9"/>
+      <rect x="36" y="124" width="4" height="48" rx="2" fill="#C9A6FF" opacity="0.9"/>
+    </g>
+    <circle cx="38" cy="148" r="7" fill="#3B0764"/>
+
+    <circle cx="182" cy="148" r="24" fill="#C9A6FF" opacity="0.10"/>
+    <g class="rotor" style="transform-origin:182px 148px">
+      <rect x="158" y="146" width="48" height="4" rx="2" fill="#C9A6FF" opacity="0.9"/>
+      <rect x="180" y="124" width="4" height="48" rx="2" fill="#C9A6FF" opacity="0.9"/>
+    </g>
+    <circle cx="182" cy="148" r="7" fill="#3B0764"/>
+
+    <!-- body -->
+    <rect x="84" y="70" width="52" height="32" rx="11" fill="#6D28D9"/>
+    <rect x="102" y="100" width="16" height="14" fill="#3B0764"/>
+    <!-- camera gimbal -->
+    <rect x="88" y="112" width="44" height="24" rx="9" fill="#3B0764"/>
+    <circle cx="110" cy="124" r="9" fill="#C9A6FF"/>
+    <!-- landing legs -->
+    <line x1="92" y1="102" x2="82" y2="122" stroke="#3B0764" stroke-width="5" stroke-linecap="round"/>
+    <line x1="128" y1="102" x2="138" y2="122" stroke="#3B0764" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+</div>
+
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div class="eyebrow-line reveal"><span class="rule"></span>PHOTOGRAPHY — VIDEOGRAPHY — DRONE</div>
+    <h1 class="hero-title reveal" id="hero-parallax">MOVE<br>AT <span class="line2">BREAKNECK</span> SPEED</h1>
+    <p class="hero-sub reveal reveal-delay-1">Break Neck Media is Myo's photo, video and aerial studio — friendly to work with, built for people who don't slow down for the camera. Ground level or a hundred feet up, every frame gets caught mid-motion.</p>
+    <div class="hero-ctas reveal reveal-delay-2">
+      <a class="btn btn-primary" href="https://script.google.com/macros/s/AKfycbywftpHsaQW2h-U7Xy5m_RJ0Hq7ZS2qYa9Rb6hwDRLRu5E1w3ethFPlzKYa1OphwT3Peg/exec">Get your media</a>
+      <a class="btn btn-ghost" href="#work">See the work</a>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <svg class="bg-camera" viewBox="0 0 240 200"><use href="#camera-glyph"/></svg>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="kicker">What I shoot</span>
+        <h2>Three ways to<br>get the footage</h2>
+      </div>
+      <p>Every job is shot to be edited, not just captured — framed, graded and delivered ready to post or print.</p>
+    </div>
+
+    <div class="service reveal">
+      <div class="service-media">
+        <img src="images/service-photography.jpeg" alt="Photography sample by Break Neck Media" loading="lazy">
+      </div>
+      <div class="service-copy">
+        <span class="service-num">Photography</span>
+        <h3>Stills that hold the moment</h3>
+        <p>Portraits, events and action work shot on location. Every set is culled and edited by hand before it reaches you — no auto-filters, no filler frames.</p>
+        <a class="textlink" href="#work">View the gallery</a>
+      </div>
+    </div>
+
+    <div class="service reverse reveal">
+      <div class="service-media">
+        <img src="images/service-videography.jpeg" alt="Videography sample by Break Neck Media" loading="lazy">
+      </div>
+      <div class="service-copy">
+        <span class="service-num">Videography</span>
+        <h3>Video edited for how people actually watch</h3>
+        <p>Short-form and full-length edits with sound design and colour built in. From single clips to a full shoot day, cut down to what's worth keeping.</p>
+        <a class="textlink" href="#work">View the gallery</a>
+      </div>
+    </div>
+
+    <div class="service reveal">
+      <div class="service-media">
+        <img src="images/service-drone.jpeg" alt="Drone footage sample by Break Neck Media" loading="lazy">
+      </div>
+      <div class="service-copy">
+        <span class="service-num">Drone flying</span>
+        <h3>Angles nobody else on the ground can get</h3>
+        <p>Licensed aerial shots and tracking video from above — for venues, landscapes and anything that looks better from a hundred feet up.</p>
+        <a class="textlink" href="#work">View the gallery</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="kicker">Recent work</span>
+        <h2>From the gallery</h2>
+      </div>
+      <p>A running set of the last few shoots — ground and air.</p>
+    </div>
+
+    <div class="gallery-grid reveal">
+      <a href="images/gallery-1.jpeg" target="_blank" rel="noopener"><img loading="lazy" alt="Aerial drone photo over Torquay at sunset" src="images/gallery-1.jpeg"></a>
+      <a href="images/gallery-2.jpeg" target="_blank" rel="noopener"><img loading="lazy" alt="Aerial drone photo over the town and coastline" src="images/gallery-2.jpeg"></a>
+      <a href="images/gallery-3.jpeg" target="_blank" rel="noopener"><img loading="lazy" alt="Street at sunset" src="images/gallery-3.jpeg"></a>
+      <a href="images/gallery-4.jpeg" target="_blank" rel="noopener"><img loading="lazy" alt="Black and white skatepark action shot" src="images/gallery-4.jpeg"></a>
+      <a href="images/gallery-5.jpeg" target="_blank" rel="noopener"><img loading="lazy" alt="Sunset over the park" src="images/gallery-5.jpeg"></a>
+      <a href="images/gallery-6.jpeg" target="_blank" rel="noopener"><img loading="lazy" alt="Black and white mountain bike wheelie" src="images/gallery-6.jpeg"></a>
+    </div>
+    <div class="gallery-more reveal">
+      <a class="btn btn-ghost" href="https://www.breakneckmedia.co.uk/gallery">View full gallery</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <svg class="bg-camera" viewBox="0 0 240 200"><use href="#camera-glyph"/></svg>
+  <div class="wrap about">
+    <div class="about-media reveal">
+      <img src="images/about-myo.jpeg" alt="A shot from Myo, founder of Break Neck Media" loading="lazy">
+    </div>
+    <div class="about-copy reveal reveal-delay-1">
+      <span class="kicker">About</span>
+      <h2 style="font-family:var(--headline); font-weight:700; font-size:clamp(28px,4vw,44px); margin:0 0 20px;">Myo — founder</h2>
+      <p>From a young age, I've been obsessed with filming and editing my surroundings — always looking for ways to turn everyday moments into stories. Photography and videography aren't a side interest, they're how I see things.</p>
+      <p>I started Break Neck Media to build that into something real: a place to grow my experience in creative media and content creation, one shoot at a time. Flying drones lets me take it further — capturing angles and perspectives that don't exist from the ground.</p>
+      <div class="founder">
+        <span class="line"></span>
+        <span>Myo, Founder</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <div class="wrap cta-inner reveal">
+    <div>
+      <h2>Shot at a recent event?</h2>
+      <p>Find and download your photos and clips from the latest shoot.</p>
+    </div>
+    <a class="btn btn-primary" href="https://script.google.com/macros/s/AKfycbywftpHsaQW2h-U7Xy5m_RJ0Hq7ZS2qYa9Rb6hwDRLRu5E1w3ethFPlzKYa1OphwT3Peg/exec">Get your media</a>
+  </div>
+</div>
+
+<footer id="contact">
+  <svg class="bg-camera" viewBox="0 0 240 200"><use href="#camera-glyph"/></svg>
+  <div class="wrap contact-row">
+    <div class="reveal">
+      <span class="kicker">Get in touch</span>
+      <h2>Let's shoot<br>something.</h2>
+      <div class="contact-links">
+        <a class="icon-btn" href="mailto:myo_b@icloud.com" aria-label="Email Break Neck Media">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" stroke="#C9A6FF" stroke-width="1.6"/>
+            <path d="M3.5 6L12 12.5L20.5 6" stroke="#C9A6FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <a class="icon-btn" href="tel:+447940252653" aria-label="Call Break Neck Media">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 3.5c1 0 2.6.3 3.2 2 .5 1.4-.2 2.6-1 3.4-.4.4-.5.7-.3 1.2 1 2.3 2.7 4 5 5 .5.2.8.1 1.2-.3.8-.8 2-1.5 3.4-1 1.7.6 2 2.2 2 3.2 0 1.7-1.5 2.5-3 2.5-6.6 0-12-5.4-12-12 0-1.5.8-3 2.5-3z" stroke="#C9A6FF" stroke-width="1.6" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="meta-col reveal reveal-delay-1">
+      <div>
+        <span class="label">Based in</span>
+        Torquay, England — available for travel
+      </div>
+      <div>
+        <span class="label">Services</span>
+        Photography, videography, licensed drone flying
+      </div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>&copy; <span id="year"></span> Break Neck Media</span>
+    <span>Photography — Videography — Drone Flying</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Reveal-on-scroll for text and blocks
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function(el){ io.observe(el); });
+
+  // Flying drone: starts near the bottom, climbs toward the top of the
+  // viewport as the page is scrolled down, with a gentle side-to-side drift.
+  var drone = document.getElementById('flying-drone');
+  var heroParallax = document.getElementById('hero-parallax');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function updateDrone(){
+    var doc = document.documentElement;
+    var scrollTop = window.scrollY || doc.scrollTop;
+    var scrollHeight = doc.scrollHeight - window.innerHeight;
+    var progress = scrollHeight > 0 ? Math.min(1, Math.max(0, scrollTop / scrollHeight)) : 0;
+
+    if(!reduceMotion && drone){
+      var topPercent = 90 - progress * 82;
+      var drift = Math.sin(progress * Math.PI * 5) * 14;
+      var tilt = -6 - progress * 6;
+      drone.style.top = topPercent + '%';
+      drone.style.transform = 'translateX(' + drift + 'px) rotate(' + tilt + 'deg)';
+    }
+    if(!reduceMotion && heroParallax){
+      heroParallax.style.transform = 'translateY(' + (scrollTop * -0.08) + 'px)';
+    }
+  }
+
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){
+      window.requestAnimationFrame(function(){ updateDrone(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', updateDrone);
+  updateDrone();
+</script>
+
+</body>
+</html>
